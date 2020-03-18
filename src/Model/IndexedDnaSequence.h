@@ -8,7 +8,7 @@
 class IndexedDnaSequence : public DnaSequence
 {
 public:
-    static int seq_id;
+    static int s_seq_id;
 
     IndexedDnaSequence() {};
     explicit IndexedDnaSequence(string name, string sequence);

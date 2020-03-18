@@ -284,7 +284,21 @@ void Del::runCommand(vector<string> input)
 
 void ReEnum::runCommand(vector<string> input)
 {
+    if(input.size() > 1)
+    {
+        Print::print("Invalid syntax, try again\n");
+        return;
+    }
+    map<pair<int, string>, string>::iterator it;
+    int id_counter = 0;
+    int* id_ptr;
 
+    for(it = DataBase::m_database.begin(); it != DataBase::m_database.end(); it++)
+    {
+        id_ptr = const_cast<int*>(&it->first.first);
+        *id_ptr = ++id_counter;
+    }
+    IndexedDnaSequence::s_seq_id = id_counter;
 }
 
 void Save::runCommand(vector<string> input)
