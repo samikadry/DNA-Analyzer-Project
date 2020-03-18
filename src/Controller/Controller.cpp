@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Controller.h"
 #include "../View/Parser.h"
+#include "../View/Print.h"
 
 New new_object;
 Load load_object;
@@ -33,9 +34,15 @@ void controller()
     string input_line;
     vector<string> cmd; /*used for the input parser*/
 
+    Print::print("> cmd>>> ");
     while(getline(cin, input_line))
     {
         cmd = Parser::parse_input(input_line);
-        commands_map.at(cmd.at(0))->runCommand(cmd);
+        try
+        {
+            commands_map.at(cmd.at(0))->runCommand(cmd);
+        }
+        catch (...){}
+        Print::print("> cmd>>> ");
     }
 }

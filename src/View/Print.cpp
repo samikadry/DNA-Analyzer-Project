@@ -2,5 +2,5 @@
 
 void Print::print(string output)
 {
-    cout << output << endl;
+    cout << "\n" << output;
 }
