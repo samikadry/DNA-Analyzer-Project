@@ -1,14 +1,14 @@
 #include "IndexedDnaSequence.h"
 
 int IndexedDnaSequence::seq_id = 0;
-map<int, string> IndexedDnaSequence::m_database_by_id;
-map<string, string> IndexedDnaSequence::m_database_by_name;
+map<int, string> DataBase::m_id_database;
+map<string, string> DataBase::m_name_database;
 
 IndexedDnaSequence::IndexedDnaSequence(string name, string sequence) : DnaSequence(sequence), m_name(name)
 {
     m_id = ++seq_id;
-    m_database_by_id.insert(pair<int, string>(m_id, sequence));
-    m_database_by_name.insert(pair<string, string>(name, sequence));
+    DataBase::m_id_database.insert(pair<int, string>(m_id, sequence));
+    DataBase::m_name_database.insert(pair<string, string>(name, sequence));
 }
 
 int IndexedDnaSequence::getId()

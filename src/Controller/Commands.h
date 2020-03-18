@@ -4,18 +4,11 @@
 #include "../Model/IndexedDnaSequence.h"
 #include "InterfaceCMD.h"
 
+/* Sequence Creation Commands */
 class New : public InterfaceCmd
 {
 public:
     static int new_seq_name_id;
-
-    void runCommand(vector<string> input);
-};
-
-class Save : public InterfaceCmd
-{
-public:
-    IndexedDnaSequence m_sequence;
 
     void runCommand(vector<string> input);
 };
@@ -36,6 +29,7 @@ public:
     void runCommand(vector<string> input);
 };
 
+/* Sequence Manipulation Commands */
 class Slice : public InterfaceCmd
 {
 public:
@@ -68,6 +62,34 @@ public:
     void runCommand(vector<string> input);
 };
 
+/* Sequence Management Commands */
+class Rename : public InterfaceCmd
+{
+public:
+    void runCommand(vector<string> input);
+};
+
+class Del : public InterfaceCmd
+{
+public:
+    void runCommand(vector<string> input);
+};
+
+class ReEnum : public InterfaceCmd
+{
+public:
+    void runCommand(vector<string> input);
+};
+
+class Save : public InterfaceCmd
+{
+public:
+    IndexedDnaSequence m_sequence;
+
+    void runCommand(vector<string> input);
+};
+
+/* Control Commands */
 class Quit : public InterfaceCmd
 {
 public:

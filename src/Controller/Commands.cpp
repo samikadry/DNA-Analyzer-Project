@@ -29,17 +29,6 @@ void New::runCommand(vector<string> input)
     Print::print("[" + ss.str() + "] " + name + ": " + input.at(1) + "\n");
 }
 
-void Save::runCommand(vector<string> input)
-{
-    string file_name;
-    if(input.size() == 2)
-        file_name = input.at(1);
-    if(input.size() == 3)
-        file_name = input.at(2);
-    m_sequence = IndexedDnaSequence(file_name += ".rawdna", input.at(1));
-    m_sequence.writeDNASequenceToFile(file_name);
-}
-
 void Load::runCommand(vector<string> input)
 {
     IndexedDnaSequence indexedDnaSequence;
@@ -54,7 +43,6 @@ void Load::runCommand(vector<string> input)
     ss << indexedDnaSequence.getId();
     Print::print("[" + ss.str() + "] " + name + ": " + m_sequence.getNucleotides() + "\n");
 }
-
 
 void Dup::runCommand(vector<string> input)
 {
@@ -73,27 +61,27 @@ void Dup::runCommand(vector<string> input)
             stoi >> id;
             string key = "";
 
-            for (map<string, string>::iterator it = IndexedDnaSequence::m_database_by_name.begin();
-                 it != IndexedDnaSequence::m_database_by_name.end(); ++it)
+            for (map<string, string>::iterator it = DataBase::m_name_database.begin();
+                 it != DataBase::m_name_database.end(); ++it)
             {
-                if (it->second == indexedDnaSequence.m_database_by_id.find(id)->second)
+                if (it->second == DataBase::m_id_database.find(id)->second)
                 {
                     key = it->first;
                     break;
                 }
             }
             indexedDnaSequence = IndexedDnaSequence(name = key + "_" + convert.str(),
-                                                    indexedDnaSequence.m_database_by_id.find(id)->second);
+                                                    DataBase::m_id_database.find(id)->second);
         }
         else /*if given name of sequence*/
         {
             int key = -1;
             stringstream temp;
 
-            for (map<int, string>::iterator it = IndexedDnaSequence::m_database_by_id.begin();
-                 it != IndexedDnaSequence::m_database_by_id.end(); ++it)
+            for (map<int, string>::iterator it = DataBase::m_id_database.begin();
+                 it != DataBase::m_id_database.end(); ++it)
             {
-                if (it->second == indexedDnaSequence.m_database_by_name.find(input.at(1))->second)
+                if (it->second == DataBase::m_name_database.find(input.at(1))->second)
                 {
                     key = it->first;
                     break;
@@ -101,7 +89,7 @@ void Dup::runCommand(vector<string> input)
             }
             temp << key;
             indexedDnaSequence = IndexedDnaSequence(name = temp.str() + "_" + convert.str(),
-                                                    indexedDnaSequence.m_database_by_name.find(input.at(1))->second);
+                                                    DataBase::m_name_database.find(input.at(1))->second);
         }
     }
     else if(input.size() == 3)
@@ -114,27 +102,27 @@ void Dup::runCommand(vector<string> input)
             stoi >> id;
             string key = "";
 
-            for (map<string, string>::iterator it = IndexedDnaSequence::m_database_by_name.begin();
-                 it != IndexedDnaSequence::m_database_by_name.end(); ++it)
+            for (map<string, string>::iterator it = DataBase::m_name_database.begin();
+                 it != DataBase::m_name_database.end(); ++it)
             {
-                if (it->second == indexedDnaSequence.m_database_by_id.find(id)->second)
+                if (it->second == DataBase::m_id_database.find(id)->second)
                 {
                     key = it->first;
                     break;
                 }
             }
             indexedDnaSequence = IndexedDnaSequence(name = input.at(2).substr(1),
-                                                    indexedDnaSequence.m_database_by_id.find(id)->second);
+                                                    DataBase::m_id_database.find(id)->second);
         }
         else /*if given name of sequence*/
         {
             int key = -1;
             stringstream temp;
 
-            for (map<int, string>::iterator it = IndexedDnaSequence::m_database_by_id.begin();
-                 it != IndexedDnaSequence::m_database_by_id.end(); ++it)
+            for (map<int, string>::iterator it = DataBase::m_id_database.begin();
+                 it != DataBase::m_id_database.end(); ++it)
             {
-                if (it->second == indexedDnaSequence.m_database_by_name.find(input.at(1))->second)
+                if (it->second == DataBase::m_name_database.find(input.at(1))->second)
                 {
                     key = it->first;
                     break;
@@ -142,13 +130,13 @@ void Dup::runCommand(vector<string> input)
             }
             temp << key;
             indexedDnaSequence = IndexedDnaSequence(name = input.at(2).substr(1),
-                                                    indexedDnaSequence.m_database_by_name.find(input.at(1))->second);
+                                                    DataBase::m_name_database.find(input.at(1))->second);
         }
     }
 
     ss << indexedDnaSequence.getId();
     Print::print("[" + ss.str() + "] " + name + ": " +
-                 indexedDnaSequence.m_database_by_id.at(indexedDnaSequence.getId()) + "\n");
+                         DataBase::m_id_database.at(indexedDnaSequence.getId()) + "\n");
 }
 
 void Slice::runCommand(vector<string> input)
@@ -169,6 +157,32 @@ void Concat::runCommand(vector<string> input)
 void Pair::runCommand(vector<string> input)
 {
 
+}
+
+void Rename::runCommand(vector<string> input)
+{
+
+}
+
+void Del::runCommand(vector<string> input)
+{
+
+}
+
+void ReEnum::runCommand(vector<string> input)
+{
+
+}
+
+void Save::runCommand(vector<string> input)
+{
+    string file_name;
+    if(input.size() == 2)
+        file_name = input.at(1);
+    if(input.size() == 3)
+        file_name = input.at(2);
+    m_sequence = IndexedDnaSequence(file_name += ".rawdna", input.at(1));
+    m_sequence.writeDNASequenceToFile(file_name);
 }
 
 void Quit::runCommand(vector<string> input)
