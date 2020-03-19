@@ -3,23 +3,36 @@
 ```plantuml
 @startuml
 !pragma useNewPackage
+left to right direction
+
 set separator none
-package DnaAnalyzer {
-  class DnaSequence
-  class Codon
-  class Nucleotides
+package View{
+  class InterfaceCMD
+  class Parser
+  class Print
 }
 
-package CLI {
-  class DnaFileStreamer
+package Model{
+  class Codon
+  class Nucleotides
+  class DnaSequence
   class IndexedDnaSequence
-  class SequenceCreationCommands
-  class SequenceManipulationCommands
-  class SequenceManagementCommands
-  class SequenceAnalysisCommands
-  class ControlCommands
-  class CommandResultsLabels
-  class LabelActions
+  class DataBase
+}
+
+package Controller{
+  class New
+  class Dup
+  class Load
+  class Slice
+  class Replace
+  class Concat
+  class Pair
+  class Rename
+  class Del
+  class ReEnum
+  class Save
+  class Quit
 }
 @enduml
 ```

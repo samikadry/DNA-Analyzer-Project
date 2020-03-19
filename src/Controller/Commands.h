@@ -2,7 +2,7 @@
 #define DNA_COMMANDS_H
 
 #include "../Model/IndexedDnaSequence.h"
-#include "InterfaceCMD.h"
+#include "../View/InterfaceCMD.h"
 
 /* Sequence Creation Commands */
 class New : public InterfaceCmd

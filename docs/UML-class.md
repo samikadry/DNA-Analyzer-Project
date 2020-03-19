@@ -3,7 +3,7 @@
 ```plantuml
 @startuml
 
-top to bottom direction
+left to right direction
 
 class DnaSequence{
     - m_nucleotides : string
@@ -41,11 +41,6 @@ class Nucleotides{
     + getPair() : char
 }
 
-class DnaFileStreamer{
-    +save() : bool
-    +load() : bool
-}
-
 class IndexedDnaSequence{
     -m_name : string
     -m_id : int
@@ -53,61 +48,90 @@ class IndexedDnaSequence{
     +getId() : int
 }
 
-class SequenceCreationCommands{
-    +new() : DnaSequence
-    +dup() : DnaSequence
+class New{
+    +runCommand()
 }
 
-class SequenceManipulationCommands{
-    +slice() : DnaSequence
-    +replace() : DnaSequence
-    +concat() : DnaSequence
-    +pair() : DnaSequence
+class Dup{
+    +runCommand()
 }
 
-class SequenceManagementCommands{
-    +rename()
-    +del()
-    +reenum()
+class Load{
+    +runCommand()
 }
 
-class SequenceAnalysisCommands{
-    +len()
-    +find() : size_t
-    +count() : size_t
-    +findall() : list<size_t>
+class Slice{
+    +runCommand()
 }
 
-class ControlCommands{
-    +help()
-    +list()
-    +show()
-    +quit()
+class Replace{
+    +runCommand()
 }
 
-class CommandResultsLabels{
-    +labels()
+class Concat{
+    +runCommand()
 }
 
-class LabelActions{
-    +calc(char)
-    +max()
-    +min()
-    +size()
-    +atindex()
+class Pair{
+    +runCommand()
 }
+
+
+class Rename{
+    +runCommand()
+}
+
+class Del{
+    +runCommand()
+}
+
+class ReEnum{
+    +runCommand()
+}
+
+class Save{
+    +runCommand()
+}
+
+
+class Quit{
+    +runCommand()
+}
+
+class InterfaceCMD{
+    +runCommand() = 0
+}
+
+class DataBase{}
 
 DnaSequence --> Codon
 DnaSequence --> Nucleotides
-DnaFileStreamer --> DnaSequence
-DnaSequence <|.. IndexedDnaSequence
-IndexedDnaSequence "many" *-- "1" SequenceCreationCommands : contains
-IndexedDnaSequence "many" *-- "1" SequenceManipulationCommands : contains
-IndexedDnaSequence "many" *-- "1" SequenceManagementCommands : contains
-IndexedDnaSequence "many" *-- "1" SequenceAnalysisCommands : contains
-IndexedDnaSequence "many" *-- "1" ControlCommands : contains
-IndexedDnaSequence "many" *-- "1" CommandResultsLabels : contains
-IndexedDnaSequence "many" *-- "1" LabelActions : contains
+DnaSequence <|-- IndexedDnaSequence
+DataBase "1" *-- "1" New : contains
+DataBase "1" *-- "1" Dup : contains
+DataBase "1" *-- "1" Load : contains
+DataBase "1" *-- "1" Slice : contains
+DataBase "1" *-- "1" Replace : contains
+DataBase "1" *-- "1" Concat : contains
+DataBase "1" *-- "1" Pair : contains
+DataBase "1" *-- "1" Rename : contains
+DataBase "1" *-- "1" Del : contains
+DataBase "1" *-- "1" ReEnum : contains
+DataBase "1" *-- "1" Save : contains
+DataBase "1" *-- "1" Quit : contains
+DataBase "1" --> "many" IndexedDnaSequence 
 
+New --|> InterfaceCMD
+Dup --|> InterfaceCMD
+Load --|> InterfaceCMD
+Slice --|> InterfaceCMD
+Replace --|> InterfaceCMD
+Concat --|> InterfaceCMD
+Pair --|> InterfaceCMD
+Rename --|> InterfaceCMD
+Del --|> InterfaceCMD
+ReEnum --|> InterfaceCMD
+Save --|> InterfaceCMD
+Quit --|> InterfaceCMD
 @enduml
 ```
